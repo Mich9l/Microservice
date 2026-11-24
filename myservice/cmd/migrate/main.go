@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"database/sql"
 	"flag"
 	"fmt"
@@ -37,7 +38,7 @@ func main() {
 		args = []string{"up"}
 	}
 
-	if err := goose.Run(args[0], db, *dir, args[1:]...); err != nil {
+	if err := goose.RunContext(context.Background(), args[0], db, *dir, args[1:]...); err != nil {
 		fmt.Fprintf(os.Stderr, "goose: %v\n", err)
 		os.Exit(1)
 	}

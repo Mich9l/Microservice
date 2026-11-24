@@ -1,7 +1,6 @@
 package domain
 
 type Recipe struct {
-	ID          int64
-	Name        string
-	Description string
+	ID   int64
+	Name string
 }
