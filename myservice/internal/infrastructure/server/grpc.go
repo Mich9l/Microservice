@@ -7,6 +7,7 @@ import (
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
 
+	"myservice/api"
 	"myservice/internal/infrastructure/repository"
 )
 
@@ -16,10 +17,14 @@ type GRPCServer struct {
 	log  *zap.Logger
 }
 
-func New(addr string, _ *repository.RecipeRepository, log *zap.Logger) (*GRPCServer, error) {
+func New(addr string, repo *repository.RecipeRepository, log *zap.Logger) (*GRPCServer, error) {
+	srv := grpc.NewServer()
+	handler := NewRecipeGRPCHandler(repo, log)
+	api.RegisterRecipeServiceServer(srv, handler)
+
 	return &GRPCServer{
 		addr: addr,
-		srv:  grpc.NewServer(),
+		srv:  srv,
 		log:  log,
 	}, nil
 }

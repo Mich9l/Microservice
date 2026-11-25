@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package grpc;
+
+option go_package = "myservice/api";
+
+service RecipeService {
+  rpc GetRecipe(GetRecipeRequest) returns (GetRecipeResponse);
+}
+
+message GetRecipeRequest {
+  int64 id = 1;
+}
+
+message GetRecipeResponse {
+  Recipe recipe = 1;
+}
+
+message Recipe {
+  int64 id = 1;
+  string name = 2;
+  repeated Ingredient ingredients = 3;
+}
+
+message Ingredient {
+  int64 id = 1;
+  string name = 2;
+  string unit = 3;
+  int32 quantity = 4;
+}
